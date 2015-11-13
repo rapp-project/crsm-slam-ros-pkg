@@ -551,7 +551,7 @@ namespace crsm_slam{
     int R=0;
     int dMeasure;
     if(meanDensity>0.2) meanDensity=0.2;
-    if(meanDensity<0.04) meanDensity=0.04;
+    if(meanDensity<0.05) meanDensity=0.05;
     std::set<long> prevPoints;
 
     expansion.expansions[RIGHT]=0;
@@ -588,7 +588,7 @@ namespace crsm_slam{
         [static_cast<int>(robotPose.y+map.info.originy)];
 
       dMeasure=(int)((float)laser.scan.distance[measid] / slamParams.ocgd);
-      while(R < dMeasure + 3){
+      while(R < dMeasure + 4){
         int xPoint,yPoint;
         xPoint = R * cos(robotPose.theta + laser.angles[measid])
           + robotPose.x + map.info.originx;
@@ -605,7 +605,7 @@ namespace crsm_slam{
         float oldtt = map.p[(unsigned int)xPoint][(unsigned int)yPoint];
 
         float diff=fabs(tt-127.0)/128.0;
-        diff = pow(diff, 0.5);
+        //diff = pow(diff, 0.5);
 
         if(dMeasure > R || ( xt == 0 && yt == 0))
           tt+=(1-diff)*meanDensity*slamParams.density;
@@ -688,12 +688,7 @@ namespace crsm_slam{
     grid.data.resize(width*height) ;
     for(int i=0;i<width;i++){
       for(int j=0;j<height;j++){
-        if(map.p[i][j] > 128)
-          grid.data[j*width+i] = 0;
-        else if (map.p[i][j] < 126)
-          grid.data[j*width+i] = 100;
-        else
-          grid.data[j*width+i] = 51;
+        grid.data[j*width+i]= 100.0-(int) (map.p[i][j]*100.0/255.0);
       }
     }
     _occupancyGridPublisher.publish(grid);
