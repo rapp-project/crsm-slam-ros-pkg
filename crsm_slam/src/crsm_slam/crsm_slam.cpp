@@ -588,7 +588,7 @@ namespace crsm_slam{
         [static_cast<int>(robotPose.y+map.info.originy)];
 
       dMeasure=(int)((float)laser.scan.distance[measid] / slamParams.ocgd);
-      while(R < dMeasure + 4){
+      while(R < dMeasure + 2){
         int xPoint,yPoint;
         xPoint = R * cos(robotPose.theta + laser.angles[measid])
           + robotPose.x + map.info.originx;
