@@ -2,12 +2,12 @@
 occupancy_grid_publish_topic : /slam/occupancyGridMap
 robot_trajectory_publish_topic : /robot_trajectory
 trajectory_publisher_frame_id : map
-laser_subscriber_topic : /laser/scan
+laser_subscriber_topic : /scan
 pose_publish_topic: /pose
 publish_tf: true
 
 #~ Tf frames
-base_footprint_frame : base_footprint
+base_footprint_frame : base_footprint_slam
 base_frame : base_link
 map_frame : map
 
